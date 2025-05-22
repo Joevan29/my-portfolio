@@ -165,8 +165,8 @@ export default function Contact() {
             className="text-gray-600 text-lg max-w-2xl mx-auto"
             variants={itemVariants}
           >
-            I'm always open to new opportunities and collaborations. 
-            Let's create something amazing together!
+            I am always open to new opportunities and collaborations. 
+            Lets create something amazing together!
           </motion.p>
         </motion.div>
 
@@ -195,7 +195,7 @@ export default function Contact() {
                 </motion.div>
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">Message Sent!</h3>
                 <p className="text-gray-500 text-center">
-                  Thank you for reaching out. I'll get back to you as soon as possible.
+                  Thank you for reaching out. I get back to you as soon as possible.
                 </p>
               </div>
             ) : (
