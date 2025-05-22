@@ -197,7 +197,7 @@ export default function IndexComponent() {
                     </p>
                     <p>
                         My expertise spans <span className={`${styles.textHighlight} text-highlight`}>machine learning models</span>, database architectures, and full-stack development.
-                        I'm constantly exploring new technologies and methodologies to enhance my skills and deliver 
+                        I am constantly exploring new technologies and methodologies to enhance my skills and deliver 
                         <span className={`${styles.textHighlight} text-highlight`}> innovative solutions</span>.
                     </p>
                 </motion.div>
