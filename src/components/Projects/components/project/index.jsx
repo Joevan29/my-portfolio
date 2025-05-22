@@ -8,7 +8,7 @@ export default function index({ index, title, manageModal, url, date }) {
         <div onMouseEnter={(e) => { manageModal(true, index, e.clientX, e.clientY) }} onMouseLeave={(e) => { manageModal(false, index, e.clientX, e.clientY) }} className={styles.project}>
             <div>
                 <h2>{title}</h2>
-                <p>Design & Development</p>
+                <p>Analyst & Scientist</p>
             </div>
             <div className={styles.date}>
                 <p>{date}</p>

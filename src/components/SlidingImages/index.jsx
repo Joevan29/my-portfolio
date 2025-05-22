@@ -13,12 +13,12 @@ const slider1 = [
     {
         color: "#d7d4cf",
         src: "cozy.png",
-        href: "https://cozy-adam.vercel.app/"
+        href: ""
     },
     {
         color: "#d7d4cf",
         src: "ratio.png",
-        href: "https://ratio-adam.vercel.app/"
+        href: ""
     },
     {
         color: "#d7d4cf",
