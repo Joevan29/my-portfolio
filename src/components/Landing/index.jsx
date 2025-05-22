@@ -320,7 +320,6 @@ export default function Home() {
         >
           <div className={styles.cardInner}>
             <div className={styles.cardHeader}>
-              <div className={styles.companyLogo}>PLAY<span>NEXUS</span></div>
               <div className={styles.cardBadge}>UNIVERSITAS NASIONAL</div>
             </div>
             
@@ -331,7 +330,7 @@ export default function Home() {
                 scale: [1, 1.05, 1]
               }}
               transition={{
-                duration: 4,
+                duration: 10,
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
@@ -343,7 +342,7 @@ export default function Home() {
                 scale: [1, 1.1, 1]
               }}
               transition={{
-                duration: 3,
+                duration: 10,
                 repeat: Infinity,
                 ease: "easeInOut",
                 delay: 1
@@ -351,28 +350,6 @@ export default function Home() {
             />
             
             <div className={styles.cardHole} />
-            
-            <motion.div 
-              className={`${styles.cardChip} card-element`}
-              animate={{
-                boxShadow: [
-                  '0 0 5px rgba(0,255,255,0.3)',
-                  '0 0 10px rgba(0,255,255,0.7)',
-                  '0 0 5px rgba(0,255,255,0.3)'
-                ]
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              <div className={styles.chipLines}>
-                <div className={styles.chipLine}></div>
-                <div className={styles.chipLine}></div>
-                <div className={styles.chipLine}></div>
-              </div>
-            </motion.div>
             
             <div className={styles.cardContent}>
               <div className={styles.profileImageContainer}>
@@ -488,19 +465,6 @@ export default function Home() {
               <div className={styles.circuitDot}></div>
               <div className={styles.circuitDot}></div>
             </div>
-            
-            <motion.div 
-              className={`${styles.cardQRCode} card-element`}
-              animate={{
-                opacity: [0.7, 1, 0.7],
-                scale: [1, 1.03, 1]
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
             
             <motion.div
               className={styles.cardWatermark}
