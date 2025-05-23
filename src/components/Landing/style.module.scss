@@ -83,7 +83,7 @@
 }
 
 .heroTitle {
-  font-size: clamp(3rem, 8vw, 6rem);
+  font-size: clamp(3rem, 8vw, 9rem);
   font-weight: 800;
   margin-bottom: 1rem;
   background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
@@ -304,7 +304,7 @@
 
 .profileImage {
   width: 85px;
-  height: 85px;
+  height: 90px;
   border-radius: 8px;
   object-fit: cover;
   border: 2px solid rgba(255, 255, 255, 0.2);
@@ -390,10 +390,14 @@
 
 // Card footer
 .cardFooter {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px; // dinaikkan dari bawah
   display: flex;
   justify-content: space-between;
-  padding: 12px 16px 8px;
-  font-size: 0.65rem;
+  padding: 0 12px;
+  font-size: 0.40rem;
 }
 
 .cardDetail {
@@ -418,9 +422,10 @@
 // Card barcode
 .cardBarcode {
   position: absolute;
+  top: 8px;
   bottom: 8px;
-  left: 16px;
-  right: 16px;
+  left: 8px;
+  right: 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -547,8 +552,8 @@
   }
   
   .profileImage {
-    width: 70px;
-    height: 70px;
+    width: auto;
+    height: auto;
   }
   
   .name {
@@ -566,7 +571,7 @@
   }
   
   .heroTitle {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
   
   .heroSubtitle {
