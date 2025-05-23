@@ -179,7 +179,7 @@ export default function Home() {
             <div className={styles.cardContent}>
               <div className={styles.profileImageContainer}>
                 <Image
-                  src="public/images/profile.png"
+                  src="/images/profile.png"
                   alt="Profile"
                   width={85}
                   height={85}
