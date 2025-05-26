@@ -134,14 +134,6 @@ export default function IndexComponent() {
                             </span>
                         </Rounded>
                     </a>
-                    <a href="/projects" style={{ textDecoration: 'none' }}>
-                        <Rounded className={`${styles.button} ${styles.secondary}`}>
-                            <p>View projects</p>
-                            <span className={styles.buttonIcon}>
-                                <FiArrowRight />
-                            </span>
-                        </Rounded>
-                    </a>
                 </motion.div>
                 
                 {/* Static decorative dots - no animation */}
