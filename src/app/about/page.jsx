@@ -2,9 +2,8 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import styles from './style.module.scss';
-import Rounded from '../../common/RoundedButton';
-import Magnetic from '../../common/Magnetic';
-import Contact from '../../components/Contact';
+import Rounded from '../../common/RoundedButton'; // Assuming this is a local component
+import Contact from '../../components/Contact'; // Assuming this is a local component
 import { ReactLenis } from "@studio-freight/react-lenis";
 import { 
   useScroll, 
@@ -13,6 +12,14 @@ import {
   useInView, 
   useSpring 
 } from 'framer-motion';
+
+// Icon for the mobile "Home" button
+const FiArrowLeftCustom = ({ size = 20, className = "", ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>
+    <line x1="19" y1="12" x2="5" y2="12"></line>
+    <polyline points="12 19 5 12 12 5"></polyline>
+  </svg>
+);
 
 export default function About() {
   // Refs for scroll animations
@@ -23,8 +30,8 @@ export default function About() {
   
   // InView hooks for triggering animations
   const isIntroInView = useInView(introRef, { once: false, margin: "-100px" });
-  const isSkillsInView = useInView(skillsRef, { once: false });
-  const isRolesInView = useInView(rolesRef, { once: false });
+  const isSkillsInView = useInView(skillsRef, { once: false, margin: "-100px" }); // Adjusted margin for consistency
+  const isRolesInView = useInView(rolesRef, { once: false, margin: "-100px" });   // Adjusted margin for consistency
   
   // State for responsive design
   const [isMobile, setIsMobile] = useState(false);
@@ -32,36 +39,39 @@ export default function About() {
   // Scroll animation setup
   const { scrollYProgress } = useScroll({
     target: container,
-    offset: ["start end", "end end"]
+    offset: ["start end", "end end"] // Animate from when container bottom hits viewport top, to when container bottom hits viewport bottom
   });
 
   // Spring animations for smoother movement
   const smoothProgress = useSpring(scrollYProgress, { 
     damping: 20, 
-    stiffness: 100 
+    stiffness: 100,
+    restDelta: 0.001 // Define a rest delta for the spring
   });
 
   // Check for mobile view on mount and resize
   useEffect(() => {
-    if (typeof document !== "undefined") {
-      document.body.style.overflow = 'scroll';
-      
-      const handleResize = () => {
-        setIsMobile(window.innerWidth <= 768);
-      };
-      
-      handleResize();
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }
+    // Let ReactLenis manage body overflow when 'root' is true
+    // if (typeof document !== "undefined") {
+    //   document.body.style.overflow = 'scroll'; // Removed: Lenis will handle this.
+    // }
+    
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    handleResize(); // Call on mount
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // Transform animations based on scroll progress
+  // These animations are largely disabled on mobile for better performance/UX
   const x = useTransform(smoothProgress, [0, 1], [0, isMobile ? 0 : 250]);
-  const y = useTransform(smoothProgress, [0, 1], [-300, isMobile ? 0 : 0]);
+  // const y = useTransform(smoothProgress, [0, 1], [-300, isMobile ? 0 : 0]); // 'y' transform not used in JSX currently
   const rotate = useTransform(smoothProgress, [0, 1], [-120, isMobile ? 0 : -20]);
   const margin = useTransform(smoothProgress, [0, 1], [0, isMobile ? 0 : -100]);
-  const scale = useTransform(smoothProgress, [0, 0.3, 1], [0.8, 1, 1.1]);
+  const scale = useTransform(smoothProgress, [0, 0.3, 1], [0.8, 1, 1.1]); // Globe scale animation
   
   // Animation variants
   const titleVariants = {
@@ -82,7 +92,7 @@ export default function About() {
       opacity: 1,
       transition: {
         staggerChildren: 0.2,
-        delayChildren: 0.3
+        delayChildren: 0.3 // Ensure parent is visible before children animate
       }
     }
   };
@@ -127,8 +137,12 @@ export default function About() {
 
   return (
     <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
-      {/* Added padding-top to create space between header and this component */}
-      <div className={`${styles.container} pt-[160px] mt-0`} ref={container}>
+      
+      {/* Main content container with responsive top padding */}
+      <div 
+        className={`${styles.container} mt-0 ${isMobile ? 'pt-6 pb-12' : 'pt-[160px] pb-24'}`} // Responsive padding-top & added padding-bottom
+        ref={container}
+      >
         {/* Top Section with 3 columns */}
         <div className={styles.topSection}>
           {/* Introduction Section - Left Column */}
@@ -150,13 +164,15 @@ export default function About() {
             <motion.div 
               style={{ x, scale }} 
               className={styles.buttonContainer}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              whileHover={{ scale: 1.15 }} // Slightly increased hover scale for globe
+              whileTap={{ scale: 0.9 }}   // Adjusted tap scale
+              transition={{ type: "spring", stiffness: 300, damping: 15 }} // Adjusted spring
             >
-              <Rounded backgroundColor='000' className={styles.button}>
+              {/* Assuming Rounded is a custom component */}
+              <Rounded backgroundColor='000' className={styles.button}> 
                 <video autoPlay loop muted playsInline className={styles.globeVideo}>
                   <source src="/videos/loopingGlobe.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
                 </video>
               </Rounded>
             </motion.div>
@@ -165,7 +181,7 @@ export default function About() {
           {/* Description Section - Right Column */}
           <div className={styles.desc}>
             <motion.svg
-              style={{ rotate, scale: 2, margin }}
+              style={{ rotate, scale: isMobile ? 1.5 : 2, margin }} // Adjusted scale for mobile arrow
               width="9"
               height="9"
               viewBox="0 0 9 9"
@@ -179,7 +195,7 @@ export default function About() {
             <motion.h4 
               className={`${styles.descText}`}
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={isIntroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }} // Animate based on intro view
               transition={{ delay: 0.5, duration: 0.7 }}
             >
               <span>
@@ -194,7 +210,7 @@ export default function About() {
             <motion.div 
               className={styles.exploringText}
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              animate={isIntroInView ? { opacity: 1 } : { opacity: 0 }} // Animate based on intro view
               transition={{ delay: 0.8, duration: 0.5 }}
             >
               <span className={styles.dimText}>Always exploring</span>
@@ -213,17 +229,18 @@ export default function About() {
         >
           <motion.h2 
             className={styles.sectionTitle}
-            variants={childVariants}
+            variants={childVariants} // Uses childVariants for individual animation from parent
           >
             Skills & Expertise
           </motion.h2>
           
           <motion.div 
             className={styles.skillsGrid}
-            variants={childVariants}
+            // No need for variants here if staggerVariants on parent handles children
           >
             {skills.map((skill, index) => (
-              <SkillPill key={index} skill={skill} />
+              // SkillPill now uses childVariants to be part of the stagger
+              <SkillPill key={index} skill={skill} variants={childVariants} /> 
             ))}
           </motion.div>
         </motion.div>
@@ -232,8 +249,9 @@ export default function About() {
         <div className={styles.helping}>
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            // Trigger animation when skills are in view or slightly after
+            animate={isSkillsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} 
+            transition={{ duration: 0.7, delay: 0.5 }} // Delay after skills grid might start
           >
             I can help you with <LoadingDots />
           </motion.h2>
@@ -242,7 +260,7 @@ export default function About() {
         {/* Roles Section */}
         <motion.div 
           ref={rolesRef}
-          className={`${styles.rolesContainer} flex flex-col md:flex-row justify-between mb-[100px]`}
+          className={`${styles.rolesContainer} flex flex-col md:flex-row justify-between`} // Removed mb, handled by main container pb
           initial="hidden"
           animate={isRolesInView ? "visible" : "hidden"}
           variants={staggerVariants}
@@ -252,13 +270,13 @@ export default function About() {
               key={role.id} 
               className={styles.roleCard}
               variants={childVariants}
-              whileHover={{ y: -10, boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.1)" }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              whileHover={{ y: -8, boxShadow: "0px 8px 25px rgba(0, 0, 0, 0.08)" }} // Adjusted hover effect
+              transition={{ type: "spring", stiffness: 350, damping: 20 }} // Adjusted spring
             >
               <motion.div 
                 className={styles.roleIcon}
-                whileHover={{ rotate: [0, -10, 10, -10, 0] }}
-                transition={{ duration: 0.5 }}
+                whileHover={{ rotate: [0, -12, 12, -12, 0], scale: 1.1 }} // Added scale to icon hover
+                transition={{ duration: 0.6 }}
               >
                 {role.icon}
               </motion.div>
@@ -277,17 +295,18 @@ export default function About() {
 
 // Component for animated loading dots
 const LoadingDots = () => (
-  <motion.span className="inline-flex">
+  <motion.span className="inline-flex ml-1"> {/* Added margin-left for spacing */}
     {[0, 1, 2].map(i => (
       <motion.span
         key={i}
-        className="opacity-0 text-xl"
+        className="opacity-0 text-xl" // Match text size with context if needed
+        style={{ display: 'inline-block' }} // Ensure dots flow correctly
         animate={{ opacity: [0, 1, 0] }}
         transition={{
           duration: 1.5,
           repeat: Infinity,
           repeatType: "loop",
-          delay: i * 0.2,
+          delay: i * 0.25, // Slightly adjusted delay
           ease: "easeInOut"
         }}
       >
@@ -298,16 +317,17 @@ const LoadingDots = () => (
 );
 
 // Component for skill pills
-const SkillPill = ({ skill }) => (
+const SkillPill = ({ skill, variants }) => ( // Added variants prop
   <motion.div 
     className={styles.skillPill}
+    variants={variants} // Apply variants for staggered animation
     whileHover={{ 
-      scale: 1.05, 
-      backgroundColor: "#0a192f", 
-      color: "white",
-      boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.15)" 
+      scale: 1.08, // Slightly increased hover scale
+      backgroundColor: "#003B4A", // Example hover color, adjust to your theme
+      color: "#E0F7FA",        // Example hover text color
+      boxShadow: "0px 5px 20px rgba(0, 59, 74, 0.2)" 
     }}
-    transition={{ duration: 0.2 }}
+    transition={{ duration: 0.15, type: "tween" }} // Faster tween transition
   >
     {skill}
   </motion.div>
