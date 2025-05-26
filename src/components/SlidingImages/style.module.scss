@@ -1,59 +1,162 @@
-.slidingImages {
-    display: flex;
-    flex-direction: column;
-    gap: 3vw;
-    position: relative;
-    background-color: white;
-    visibility: hidden;
-    z-index: 1;
-
-    .slider {
-        display: flex;
-        position: relative;
-        gap: 3vw;
-        // left: -10vw;
-
-        .project {
-            width: 100vw;
-            height: 25vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            .imageContainer {
-                position: relative;
-                width: 80%;
-                height: 80%;
-
-                img {
-                    object-fit: cover;
-                    cursor: pointer;
-                }
-            }
-        }
-    }
-
-    .circleContainer {
-        background-color: white;
-        position: relative;
-        max-width: fit-content;
-        margin-top: 100px;
-
-        .circle {
-            height: 1550%;
-            width: 120%;
-            left: -10%;
-            border-radius: 0 0 50% 50%;
-            background-color: white;
-            z-index: 1;
-            position: absolute;
-            box-shadow: 0px 60px 50px rgba(0, 0, 0, 0.748);
-        }
-    }
+.slidingImagesContainer {
+  position: relative;
+  overflow: hidden; 
+  padding: 5rem 0; 
+  background-color: var(--section-bg, #f3f4f6); 
 }
 
-@media screen and (min-width: 768px) {
-    .slidingImages {
-        visibility: visible;
+.sectionTitleContainer {
+  text-align: center;
+  margin-bottom: 3.5rem; 
+  padding: 0 1rem;
+
+  .featuredProjectsTitle {
+    font-size: clamp(2rem, 5vw, 3rem); 
+    font-weight: 700; 
+    margin-bottom: 0.75rem;
+    background-image: linear-gradient(120deg, var(--accent-color-pink, #ec4899) 0%, var(--accent-color-purple, #8b5cf6) 50%, var(--accent-color-blue, #3b82f6) 100%);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    padding-bottom: 0.25rem; 
+  }
+  
+  .featuredProjectsSubtitle {
+    font-size: clamp(0.95rem, 2.2vw, 1.15rem); 
+    font-weight: 400; // Font weight normal untuk subjudul
+    // Menerapkan gradien pada subjudul
+    background-image: linear-gradient(120deg, var(--subtitle-gradient-start, #d8b4fe) 0%, var(--subtitle-gradient-end, #fbcfe8) 100%);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent; // Penting untuk efek gradien teks
+    // Jika fallback ke warna solid jika gradien tidak didukung (jarang terjadi di browser modern):
+    // color: var(--subtitle-gradient-start, #d8b4fe); 
+
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    opacity: 0.9; // Opacity bisa sedikit dinaikkan jika gradiennya lembut
+  }
+}
+
+.slidersWrapper {
+  // Tidak ada style khusus
+}
+
+.slider {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem; 
+  will-change: transform; 
+}
+
+.projectLinkWrapper {
+  display: block; 
+  text-decoration: none; 
+  color: inherit; 
+  flex-shrink: 0; 
+}
+
+.project {
+  width: clamp(270px, 28vw, 340px); 
+  height: clamp(190px, 20vw, 240px); 
+  
+  position: relative;
+  border-radius: 12px; 
+  overflow: hidden; 
+  background-color: var(--project-card-bg, #ffffff); 
+  box-shadow: 0 5px 12px var(--project-card-shadow, rgba(0, 0, 0, 0.07)); 
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out; 
+  cursor: pointer; 
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  
+  img { 
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1); 
+  }
+
+  .project:hover & img { 
+    transform: scale(1.06); 
+  }
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.65) 40%, transparent 100%); 
+  padding: 1rem 1.25rem; 
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; 
+  opacity: 0; 
+  transform: translateY(10px); 
+  transition: opacity 0.35s ease-out, transform 0.35s ease-out; 
+  height: 70%; 
+}
+
+.projectTitle {
+  font-size: 1.05rem; 
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+  line-height: 1.35;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5); 
+}
+
+.projectCategory {
+  font-size: 0.75rem; 
+  opacity: 0.85;
+  margin-bottom: 0.4rem;
+  font-weight: 400;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+
+.viewProjectLink {
+  display: inline-flex; 
+  align-items: center;
+  font-size: 0.8rem; 
+  font-weight: 500;
+  color: var(--accent-color-blue, #87CEFA); 
+  margin-top: auto; 
+  padding-top: 0.2rem;
+  opacity: 0.9;
+  transition: opacity 0.2s ease, color 0.2s ease;
+  svg {
+    transition: transform 0.2s ease;
+  }
+  &:hover {
+    opacity: 1;
+    color: var(--accent-color-blue, #add8e6); 
+    svg {
+      transform: translateX(3px);
     }
+  }
+}
+
+.decorativeLineContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 2.5rem; 
+}
+
+.decorativeLine {
+  width: 2.5px; 
+  height: 100%; 
+  background-color: var(--accent-color-purple, #f65cc3); 
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--accent-color-purple, rgba(110, 50, 250, 0.5)); 
 }
