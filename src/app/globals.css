@@ -11,6 +11,41 @@
   --font-open-sans: 'open-sans';
 }
 
+:root {
+  --header-height: 70px;
+  --header-bg: #121828; /* Warna solid dasar jika diperlukan */
+  --header-bg-transparent: rgba(18, 24, 40, 0.75); /* Warna transparan */
+  --header-blur: 10px; /* Tingkat blur */
+  --header-shadow: rgba(0, 0, 0, 0.15);
+  --header-hamburger-bg: #2a334e;
+  --header-hamburger-border: #3e4a6e;
+  --header-hamburger-hover-bg: #37415f;
+  --header-icon-color: #c3daff;
+  --header-icon-hover-color: #ffffff;
+  --nav-link-color: #d1d5db;
+  --nav-link-hover-color: #ffffff;
+  --nav-link-hover-bg: rgba(255,255,255,0.05);
+  --focus-ring-color: #00ffff;
+  --text-primary: #e0e6f0;
+  --text-secondary: #c0d0e0;
+  --text-dim: #9cb3d9;
+  --accent-color-jopan-1: #f0f;
+  --accent-color-jopan-2: #0ff;
+  --accent-color-jopan-3: #ad59ff;
+  --accent-color-pink: #ec4899; 
+  --accent-color-purple: #8b5cf6; 
+  --accent-color-blue: #3b82f6; 
+  --title-gradient-start: #d8b4fe; /* Lavender muda */
+  --title-gradient-end: #fbcfe8;   /* Pink muda */
+  --featured-title-color-solid: #c084fc; /* Ungu muda solid */
+  /* ... dan variabel CSS lainnya yang Anda gunakan ... */
+}
+
+:root {
+  --global-mobile-header-height: 70px; /* Sesuaikan dengan tinggi header Anda */
+  /* ... variabel Anda yang lain ... */
+}
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
